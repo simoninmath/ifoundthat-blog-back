@@ -150,4 +150,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function setId(int $identifiant): static
+    {
+        $this->id = $identifiant;
+
+        return $this;
+    }
 }
