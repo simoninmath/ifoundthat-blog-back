@@ -31,7 +31,8 @@ class UserFixtures extends Fixture
 
             // Pour avoir toujours les mêmes identifiants à chaque execution des fixtures :
             $user->setId($identifiant); //only for development, setId API
-            $metadata = $manager->getClassMetadata(get_class($user));  // rewind to 1 in MySQL DB, regenerate
+            $metadata = $manager->getClassMetadata(get_class($user));  
+            // rewind to 1 in MySQL DB, regenerate
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
