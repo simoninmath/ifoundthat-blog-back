@@ -24,6 +24,9 @@ class CategorieFixtures extends Fixture
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             $categorie->setName($this->faker->word(1));
+            // Create Object Reference
+            $this->addReference('categorie_'.$i, $categorie); 
+            $i++;
             $manager->persist($categorie);
         }
 

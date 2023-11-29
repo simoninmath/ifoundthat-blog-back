@@ -24,7 +24,7 @@ class UserFixtures extends Fixture
 
     private function loadUsers(ObjectManager $manager): void
     {
-        $k = 1;
+        $compteur = 1;
         $identifiant = 1;
         foreach ($this->getUserData() as [$password, $email, $roles, $enabled]) {
             $user = new User();
@@ -41,10 +41,10 @@ class UserFixtures extends Fixture
             $user->setRoles($roles);
             $user->setEnabled($enabled);
  
-/*             if(in_array('ROLE_USER', $roles)) {
-                $this->addReference('user_'.$k, $user); 
-                $k++;
-            } */
+            if(in_array('ROLE_ADMIN', $roles)) {
+                $this->addReference('user_'.$compteur, $user); 
+                $compteur++;
+            }
 
             $manager->persist($user);
             $identifiant++;
@@ -63,7 +63,7 @@ class UserFixtures extends Fixture
             ['pass', 'user3@site.com', ['ROLE_USER'], true],
             ['pass', 'user4@site.com', ['ROLE_USER'], true],
             ['pass', 'admin1@site.com', ['ROLE_ADMIN'], true],
-            ['pass', 'admin2@site.com', ['ROLE_ADMIN'], false],
+            ['pass', 'admin2@site.com', ['ROLE_ADMIN'], true],
         ];
     }
 
