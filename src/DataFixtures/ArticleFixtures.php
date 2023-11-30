@@ -16,8 +16,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
     {
         $this->faker = Factory::create();
 
-        for ($i=1; $i <= 10; $i++) 
-        {
+        for ($i = 1; $i <= 10; $i++) {
 
             $article = new Article();
             $article->setId($i);
@@ -26,13 +25,24 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             // Get Object References
-            $article->setUser($this->getReference('user_'.rand(1, 2)));
-            $article->setCategorie($this->getReference('categorie_'.rand(1, 5)));
+            $article->setUser($this->getReference('user_' . rand(1, 2)));
+            $article->setCategorie($this->getReference('categorie_' . rand(1, 5)));
+
+            //TODO a refactoriser
+            $tab = $this->faker->randomElements(['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], null);
+            // dd($tab);
+            $interruptor = rand(true, false);
+            if ($interruptor) {
+                foreach ($tab as $value) {
+                    $article->addTag($this->getReference('tag_'.$value));
+                }
+            }
+
             $article->setTitle($this->faker->words(10, true));
             $article->setChapo($this->faker->paragraphs(1, true));
             $article->setContent($this->faker->paragraphs(3, true));
             // Create Object Reference
-            $this->addReference('article_'.$i, $article); 
+            $this->addReference('article_' . $i, $article);
             $manager->persist($article);
         }
 

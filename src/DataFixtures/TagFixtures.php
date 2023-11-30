@@ -26,6 +26,8 @@ class TagFixtures extends Fixture
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             $tag->setName($this->faker->word());
+            // Create Object Reference
+            $this->addReference('tag_'.$i, $tag); 
             $manager->persist($tag);
         }
 
