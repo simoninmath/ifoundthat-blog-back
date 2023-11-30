@@ -18,6 +18,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i=1; $i <= 10; $i++) 
         {
+
             $article = new Article();
             $article->setId($i);
             // Begin ID by nb 1
@@ -44,7 +45,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         return [
             UserFixtures::class,
             CategorieFixtures::class,
+            TagFixtures::class,
         ];
     }
-
 }
