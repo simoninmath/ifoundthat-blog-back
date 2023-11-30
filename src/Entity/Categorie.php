@@ -26,6 +26,7 @@ class Categorie
         $this->articles = new ArrayCollection();
     }
 
+    // Getter Categorie
     public function getId(): ?int
     {
         return $this->id;
@@ -36,6 +37,7 @@ class Categorie
         return $this->name;
     }
 
+    // Setters Categorie
     public function setName(string $name): static
     {
         $this->name = $name;
@@ -57,7 +59,8 @@ class Categorie
     {
         return $this->articles;
     }
-
+    
+    // CRUD Categorie
     public function addArticle(Article $article): static
     {
         if (!$this->articles->contains($article)) {

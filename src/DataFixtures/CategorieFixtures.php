@@ -26,7 +26,6 @@ class CategorieFixtures extends Fixture
             $categorie->setName($this->faker->word(1));
             // Create Object Reference
             $this->addReference('categorie_'.$i, $categorie); 
-            $i++;
             $manager->persist($categorie);
         }
 

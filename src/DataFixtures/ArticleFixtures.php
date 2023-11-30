@@ -26,7 +26,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
             // Get Object References
             $article->setUser($this->getReference('user_'.rand(1, 2)));
-            $article->setCategorie($this->getReference('categorie_'.rand(1, 1)));
+            $article->setCategorie($this->getReference('categorie_'.rand(1, 5)));
             $article->setTitle($this->faker->words(10, true));
             $article->setChapo($this->faker->paragraphs(1, true));
             $article->setContent($this->faker->paragraphs(3, true));
