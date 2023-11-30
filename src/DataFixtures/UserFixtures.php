@@ -41,11 +41,12 @@ class UserFixtures extends Fixture
             $user->setRoles($roles);
             $user->setEnabled($enabled);
  
-            if(in_array('ROLE_ADMIN', $roles)) {
+            if(in_array('ROLE_ADMIN', $roles)) 
+            {
                 $this->addReference('user_'.$compteur, $user); 
                 $compteur++;
             }
-
+            $this->addReference('user_comment_'.$identifiant, $user); 
             $manager->persist($user);
             $identifiant++;
         }

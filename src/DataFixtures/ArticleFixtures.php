@@ -30,12 +30,15 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setTitle($this->faker->words(10, true));
             $article->setChapo($this->faker->paragraphs(1, true));
             $article->setContent($this->faker->paragraphs(3, true));
+            // Create Object Reference
+            $this->addReference('article_'.$i, $article); 
             $manager->persist($article);
         }
 
         $manager->flush();
     }
 
+    // Interface who get load fixture order
     public function getDependencies()
     {
         return [
