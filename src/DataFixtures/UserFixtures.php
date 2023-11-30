@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use App\Entity\UserConnexion;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -31,7 +32,7 @@ class UserFixtures extends Fixture
 
             // Pour avoir toujours les mêmes identifiants à chaque execution des fixtures :
             $user->setId($identifiant); //only for development, setId API
-            $metadata = $manager->getClassMetadata(get_class($user));  
+            $metadata = $manager->getClassMetadata(get_class($user));
             // rewind to 1 in MySQL DB, regenerate
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
@@ -40,20 +41,29 @@ class UserFixtures extends Fixture
             $user->setEmail($email);
             $user->setRoles($roles);
             $user->setEnabled($enabled);
- 
-            if(in_array('ROLE_ADMIN', $roles)) 
-            {
-                $this->addReference('user_'.$compteur, $user); 
+
+            if (in_array('ROLE_ADMIN', $roles)) {
+                $this->addReference('user_' . $compteur, $user);
                 $compteur++;
             }
-            $this->addReference('user_comment_'.$identifiant, $user); 
+            $this->addReference('user_comment_' . $identifiant, $user);
+
+            $interruptor = rand(true, false);
+            if ($interruptor) {
+                $nbConnexions = rand(1, 10);
+                for ($i = 0; $i <= $nbConnexions; $i++) {
+                    $userConnexion = new UserConnexion();
+                    $user->addUserConnexion($userConnexion);
+                    // $manager->persist($userConnexion);
+                }
+            }
+
             $manager->persist($user);
             $identifiant++;
         }
 
         $manager->flush();
     }
-
 
     private function getUserData(): array
     {

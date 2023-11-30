@@ -47,12 +47,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserConnexion::class, cascade:["persist"])] // cascade persist
+
+    private Collection $userConnexions;
+
     public function __construct()
     {
         $this->createdAt = new DateTimeImmutable();
         $this->updatedAt = new DateTimeImmutable();
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->userConnexions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +227,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, UserConnexion>
+     */
+    public function getUserConnexions(): Collection
+    {
+        return $this->userConnexions;
+    }
+
+    public function addUserConnexion(UserConnexion $userConnexion): static
+    {
+        if (!$this->userConnexions->contains($userConnexion)) {
+            $this->userConnexions->add($userConnexion);
+            $userConnexion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserConnexion(UserConnexion $userConnexion): static
+    {
+        if ($this->userConnexions->removeElement($userConnexion)) {
+            // set the owning side to null (unless already changed)
+            if ($userConnexion->getUser() === $this) {
+                $userConnexion->setUser(null);
             }
         }
 
