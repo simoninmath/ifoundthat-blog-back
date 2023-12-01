@@ -29,6 +29,13 @@ class Newsletter
         return $this->id;
     }
 
+    public function setId(int $identifiant): static
+    {
+        $this->id = $identifiant;
+
+        return $this;
+    }
+
     public function getEmail(): ?string
     {
         return $this->email;
