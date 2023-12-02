@@ -29,10 +29,11 @@ class UserFixtures extends Fixture
         foreach ($this->getUserData() as [$password, $email, $roles, $enabled]) {
             $user = new User();
 
-            // Pour avoir toujours les mêmes identifiants à chaque execution des fixtures :
+            // To always have the same identifiers each time the fixtures are executed:
             $user->setId($identifiant); //only for development, setId API
+            
+            // Regenerate MySQL id to 1
             $metadata = $manager->getClassMetadata(get_class($user));
-            // rewind to 1 in MySQL DB, regenerate
             $metadata->setIdGenerator(new \Doctrine\ORM\Id\AssignedGenerator());
             $metadata->setIdGeneratorType(\Doctrine\ORM\Mapping\ClassMetadata::GENERATOR_TYPE_NONE);
 
