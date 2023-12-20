@@ -7,20 +7,50 @@ use App\Repository\TagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: TagRepository::class)]
-#[ApiResource]
+#[ApiResource (
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => ['read:Tag:collection']]),
+        new Post(),
+        new Get(normalizationContext: ['groups' => ['read:Tag:item']]),
+        new Put(),
+        new Delete(),
+        new Patch(),
+    ]
+)
+]
+
 class Tag
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups ([
+        'read:Tag:item',
+        'read:Tag:collection'
+     ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
+    #[Groups ([
+        'read:Tag:item',
+        'read:Tag:collection'
+     ])]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Article::class, inversedBy: 'tags')]
+    #[Groups ([
+        'read:Tag:item',
+        'read:Tag:collection'
+     ])]
     private Collection $article;
 
     public function __construct()
