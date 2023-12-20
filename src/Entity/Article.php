@@ -19,7 +19,12 @@ use ApiPlatform\Metadata\Patch;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ApiResource (
     operations: [
+        new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
+        new Post(),
         new Get(normalizationContext: ['groups' => ['read:Article:item']]),
+        new Put(),
+        new Delete(),
+        new Patch(),
     ]
 )
 ]
@@ -30,19 +35,22 @@ class Article
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private ?string $chapo = null;
 
@@ -51,36 +59,41 @@ class Article
 
     #[ORM\Column]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private ?Categorie $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private Collection $comments;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'article')]
     #[Groups ([
-        'read:Article:item'
+        'read:Article:item',
+        'read:Article:collection'
     ])]
     private Collection $tags;
 
