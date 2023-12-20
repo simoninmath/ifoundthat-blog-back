@@ -11,21 +11,51 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use DateTimeImmutable;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[ApiResource]
+#[ApiResource (
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => ['read:User:collection']]),
+        new Post(normalizationContext: ['groups' => ['read:User:item']]),
+        new Get(normalizationContext: ['groups' => ['read:User:item']]),
+        new Put(normalizationContext: ['groups' => ['read:User:item']]),
+        new Delete(normalizationContext: ['groups' => ['read:User:item']]),
+        new Patch(normalizationContext: ['groups' => ['read:User:item']]),
+    ]
+)
+]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private array $roles = [];
 
     /**
@@ -35,22 +65,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private ?bool $enabled = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private Collection $articles;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: UserConnexion::class, cascade:["persist"])] // cascade persist
-
+    #[Groups ([
+        'read:User:item',
+        'read:User:collection'
+     ])]
     private Collection $userConnexions;
 
     public function __construct()
