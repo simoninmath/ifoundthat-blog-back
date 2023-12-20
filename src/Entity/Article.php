@@ -22,9 +22,8 @@ use ApiPlatform\Metadata\Patch;
         new Get(normalizationContext: ['groups' => ['read:Article:item']]),
     ]
 )
-
-
 ]
+
 class Article
 {
     #[ORM\Id]
@@ -36,22 +35,37 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private ?string $chapo = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private ?Categorie $categorie = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
@@ -59,9 +73,15 @@ class Article
     private ?user $user = null;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private Collection $comments;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'article')]
+    #[Groups ([
+        'read:Article:item'
+    ])]
     private Collection $tags;
 
     public function __construct()
