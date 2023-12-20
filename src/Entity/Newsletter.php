@@ -5,20 +5,50 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\NewsletterRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: NewsletterRepository::class)]
-#[ApiResource]
+#[ApiResource (
+    operations: [
+        new GetCollection(normalizationContext: ['groups' => ['read:Newsletter:collection']]),
+        new Post(),
+        new Get(normalizationContext: ['groups' => ['read:Newsletter:item']]),
+        new Put(),
+        new Delete(),
+        new Patch(),
+    ]
+)
+]
+
 class Newsletter
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups ([
+        'read:Newsletter:item',
+        'read:Newsletter:collection'
+     ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
+    #[Groups ([
+        'read:Newsletter:item',
+        'read:Newsletter:collection'
+     ])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups ([
+        'read:Newsletter:item',
+        'read:Newsletter:collection'
+     ])]
     private ?\DateTimeImmutable $createdAt = null;
 
     public function __construct()
