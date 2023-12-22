@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use App\Repository\NewsletterRepository; // Import du Repository
+use App\Repository\NewsletterRepository;
 
 class NewsletterService
 {

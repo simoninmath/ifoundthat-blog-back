@@ -11,7 +11,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsletterController extends AbstractController
 {
 
-    public function __construct(private NewsletterService $newsletterService){}
+    public function __construct(
+        private NewsletterService $newsletterService
+    ){}
 
 
     #[Route('/api/newsletter', name: 'newsletter_users_from_api')]

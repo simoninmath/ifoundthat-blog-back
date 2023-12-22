@@ -13,14 +13,14 @@ class ApiController extends AbstractController
         private UserRepository $userRepository,
     ){}
 
-    #[Route('/api/newsletter', name: 'api_newsletter_userlist', methods: ['GET'])]
-    public function getUsersFromNewsletter(): JsonResponse
+    #[Route('/api/toto', name: 'api_testing', methods: ['GET'])]
+    public function getUsers(): JsonResponse
     {
-        $usersNl = $this->userRepository->getUsersNewsletterWithDql();
+        $users = $this->userRepository->getUsersInfoWithDql();
 
         try {
             $response = new JsonResponse();
-            $response->setContent(json_encode($usersNl, JSON_FORCE_OBJECT));
+            $response->setContent(json_encode($users, JSON_FORCE_OBJECT));
             $response->headers->set('Content-Type', 'application/json');
         } catch(\Exception $exception) {
             $response = new JsonResponse(
