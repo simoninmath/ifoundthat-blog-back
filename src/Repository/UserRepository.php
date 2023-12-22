@@ -40,23 +40,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    /**
-     * @return array
-     */
-    public function getUsersInfo(): array
-    {
-        $dql = "SELECT
-               u.email, u.role, u.createdAt
-               FROM App\Entity\User as u
-               JOIN u.userconnexion as uc
-               WHERE uc.createdAt LIKE :createdAt";
-
-        return $this->createQueryBuilder('u')
-            ->select('u.email', 'u.role', 'u.createdAt')
-            ->getQuery()
-            ->getResult();
-    }
-
     // DQL request
     /**
      * @return array
@@ -75,18 +58,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     // QueryBuilder -> Design Pattern Builder
-    /**
-     * @return array
-     */
-    public function getUserInfoWithQueryBuilder(): array
-    {
-       return $this->createQueryBuilder('u')
-            ->select(
-                'u.id, 
-                u.email'
-            )
-            ->getQuery()
-            ->getResult()
-       ;
-    }
+    // /**
+    //  * @return array
+    //  */
+    // public function getUserInfoWithQueryBuilder(): array
+    // {
+    //    return $this->createQueryBuilder('u')
+    //         ->select(
+    //             'u.id, 
+    //             u.email'
+    //         )
+    //         ->getQuery()
+    //         ->getResult()
+    //    ;
+    // }
 }

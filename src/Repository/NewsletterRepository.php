@@ -14,6 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Newsletter[]    findAll()
  * @method Newsletter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
+
 class NewsletterRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
@@ -21,28 +22,20 @@ class NewsletterRepository extends ServiceEntityRepository
         parent::__construct($registry, Newsletter::class);
     }
 
-//    /**
-//     * @return Newsletter[] Returns an array of Newsletter objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('n.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    // DQL request which return Array before encoding in JSON format
+    /**
+     * @return array
+     */
+    public function getUsersFromNewsletterWithDql(): array
+    {
+        $dql = "SELECT
+               u.id, u.email
+               FROM App\Entity\Newsletter as u
+               ";
 
-//    public function findOneBySomeField($value): ?Newsletter
-//    {
-//        return $this->createQueryBuilder('n')
-//            ->andWhere('n.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $this->getEntityManager()->createQuery($dql);
+        $result = $query->getResult();
+
+        return $result;
+    }
 }
