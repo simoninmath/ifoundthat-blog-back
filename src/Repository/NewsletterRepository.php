@@ -28,9 +28,10 @@ class NewsletterRepository extends ServiceEntityRepository
      */
     public function getUsersFromNewsletterWithDql(): array
     {
+        // nlu = NewsLetter User
         $dql = "SELECT
-               u.id, u.email
-               FROM App\Entity\Newsletter as u
+               nlu.id, nlu.email
+               FROM App\Entity\Newsletter as nlu
                ";
 
         $query = $this->getEntityManager()->createQuery($dql);
