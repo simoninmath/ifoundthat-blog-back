@@ -11,7 +11,9 @@ class NewsletterService
     private $httpClient;
     private $newsletterRepository;
 
-    public function __construct(HttpClientInterface $httpClient, NewsletterRepository $newsletterRepository)
+    public function __construct(
+        HttpClientInterface $httpClient, 
+        NewsletterRepository $newsletterRepository)
     {
         $this->httpClient = $httpClient;
         $this->newsletterRepository = $newsletterRepository;

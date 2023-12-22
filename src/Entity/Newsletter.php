@@ -16,7 +16,7 @@ use ApiPlatform\Metadata\Patch;
 #[ORM\Entity(repositoryClass: NewsletterRepository::class)]
 #[ApiResource (
     operations: [
-        new GetCollection(normalizationContext: ['groups' => ['read:Newsletter:collection']]),
+        // new GetCollection(normalizationContext: ['groups' => ['read:Newsletter:collection']]),
         new Post(),
         new Get(normalizationContext: ['groups' => ['read:Newsletter:item']]),
         new Put(),

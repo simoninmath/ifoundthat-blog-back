@@ -11,19 +11,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsletterController extends AbstractController
 {
 
-    public function __construct(
-        private NewsletterService $newsletterService
-    ){}
+    // public function __construct(){} // use DI with controller for more than 1 method
 
 
     #[Route('/api/newsletter', name: 'newsletter_users_from_api')]
-    public function getUsers(NewsletterService $newsletterService, NewsletterRepository $newsletterRepository): JsonResponse
+    public function getNewsletters(NewsletterRepository $newsletterRepository): JsonResponse
     {
-        // Use Service to get Users from API
-        $usersFromAPI = $newsletterService->getUsersFromNewsletterAPI();
+        // dd('test route API newsletter');
+        
+        $newsletters = $newsletterRepository->getUsersFromNewsletterWithDql();  // Get all users
+        // dd('Test newsletters from Dql', $newsletters);
 
-        return $this->json([
-            'users_from_api' => $usersFromAPI,
-        ]);
+        return $this->json($newsletters);
     }
 }
