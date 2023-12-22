@@ -2,26 +2,22 @@
 
 namespace App\Controller;
 
-use App\Service\NewsletterService;
-use App\Repository\NewsletterRepository;
+use App\Service\CustomApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsletterController extends AbstractController
 {
 
-    // public function __construct(){} // use DI with controller for more than 1 method
-
+    public function __construct(
+        private CustomApiService $customApiService  // use DI with controller for more than 1 method
+    ){} 
 
     #[Route('/api/newsletter', name: 'newsletter_users_from_api')]
-    public function getNewsletters(NewsletterRepository $newsletterRepository): JsonResponse
+    public function getNewsletters()
     {
-        // dd('test route API newsletter');
-        
-        $newsletters = $newsletterRepository->getUsersFromNewsletterWithDql();  // Get all users
-        // dd('Test newsletters from Dql', $newsletters);
+        $responseObject = $this->customApiService->getNewslettersApi();
 
-        return $this->json($newsletters);
+        return $responseObject;
     }
 }
