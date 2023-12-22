@@ -57,28 +57,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    // DQL request
+    /**
+     * @return array
+     */
+    public function getUsersInfoWithDql(): array
+    {
+        $dql = "SELECT
+               u.id, u.email
+               FROM App\Entity\User as u
+               ";
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $this->getEntityManager()->createQuery($dql);
+        $result = $query->getResult();
+
+        return $result;
+    }
+
+    // QueryBuilder -> Design Pattern Builder
+    /**
+     * @return array
+     */
+    public function getUserInfoWithQueryBuilder(): array
+    {
+       return $this->createQueryBuilder('u')
+            ->select(
+                'u.id, 
+                u.email'
+            )
+            ->getQuery()
+            ->getResult()
+       ;
+    }
 }
