@@ -21,7 +21,7 @@ use ApiPlatform\Metadata\Patch;
     operations: [
         // new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
         new Post(),
-        new Get(normalizationContext: ['groups' => ['read:Article:item']]),
+        // new Get(normalizationContext: ['groups' => ['read:Article:item']]),
         new Put(),
         new Delete(),
         new Patch(),

@@ -13,11 +13,21 @@ class ArticleController extends AbstractController
         private CustomApiService $customApiService  // use DI with controller for more than 1 method
     ){} 
 
-    #[Route('/api/article', name: 'article_from_api')]
-    public function getArticles()
+    #[Route('/api/articles', name: 'article_from_api')]
+    public function getAllArticles()
     {
-        $responseObject = $this->customApiService->getArticleApi();
+        $responseObject = $this->customApiService->getAllArticlesApi();
+        
+        return $responseObject;
+    }
+
+    #[Route('/api/article', name: 'article_from_api')]
+    public function getOneArticle()
+    {
+        $articleId = 1;
+        $responseObject = $this->customApiService->getOneArticleApi($articleId);
         
         return $responseObject; 
     }
+
 }
