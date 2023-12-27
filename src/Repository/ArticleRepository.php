@@ -21,28 +21,23 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    // DQL request which return Array before encoding in JSON format
+    /**
+     * @return array
+     */
+    public function getArticleWithDql(): array
+    {
+        // art = Article
+        $dql = "SELECT
+               art.id, art.title, art.chapo, 
+               art.createdAt, art.updatedAt
+               FROM App\Entity\Article as art
+               ";
 
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $query = $this->getEntityManager()->createQuery($dql);
+        $result = $query->getResult();
+
+        return $result;
+    }
+
 }

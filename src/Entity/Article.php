@@ -19,7 +19,7 @@ use ApiPlatform\Metadata\Patch;
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 #[ApiResource (
     operations: [
-        new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
+        // new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
         new Post(),
         new Get(normalizationContext: ['groups' => ['read:Article:item']]),
         new Put(),
