@@ -20,7 +20,7 @@ use ApiPlatform\Metadata\Patch;
 #[ApiResource (
     operations: [
         // new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
-        new Post(),
+        // new Post(),
         // new Get(normalizationContext: ['groups' => ['read:Article:item']]),
         new Put(),
         new Delete(),
@@ -29,6 +29,15 @@ use ApiPlatform\Metadata\Patch;
 )
 ]
 
+/**
+ * Secured resource.
+ */
+#[ApiResource(security: "is_granted('ROLE_USER')")]
+#[Get]
+#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+#[GetCollection]
+#[Post(security: "is_granted('ROLE_ADMIN')")]
+#[ORM\Entity]
 class Article
 {
     #[ORM\Id]
