@@ -40,7 +40,7 @@ class CustomApiService
     public function getAllArticlesApi(): Response
     {
         $allArticles = $this->articleRepository->getAllArticlesWithDql();  // Get all articles
-        // dd('Test article from CustomApiService', $articles);
+        dd('Test article from CustomApiService', $allArticles);
 
         try {
             $response = new JsonResponse();
