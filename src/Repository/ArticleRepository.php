@@ -41,20 +41,20 @@ class ArticleRepository extends ServiceEntityRepository
     }
 
 
-    // public function getOneArticleByIdWithDql($articleId)
-    // {
-    //     $dql = "SELECT art.id, art.title, 
-    //             art.chapo, art.createdAt, 
-    //             art.updatedAt
-    //             FROM App\Entity\Article as art
-    //             WHERE art.id = :articleId";    // Condition that check if it is the correct Id
+    public function getOneArticleByIdWithDql($articleId)
+    {
+        $dql = "SELECT art.id, art.title, 
+                art.chapo, art.createdAt, 
+                art.updatedAt
+                FROM App\Entity\Article as art
+                WHERE art.id = :articleId";    // Condition that check if it is the correct Id
     
-    //     $query = $this->getEntityManager()->createQuery($dql);
-    //     $query->setParameter('articleId', $articleId);   // Bond with Id pass on Method Argument
+        $query = $this->getEntityManager()->createQuery($dql);
+        $query->setParameter('articleId', $articleId);   // Bond with Id pass on Method Argument
     
-    //     $result = $query->getResult();
+        $result = $query->getResult();
     
-    //     return $result;
-    // }
+        return $result;
+    }
     
 }

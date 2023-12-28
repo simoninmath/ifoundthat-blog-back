@@ -21,13 +21,13 @@ class ArticleController extends AbstractController
         return $responseObject;
     }
 
-    // #[Route('/api/article', name: 'one_article_by_id_from_api')]
-    // public function getOneArticle()
-    // {
-    //     $articleId = 1;
-    //     $responseObject = $this->customApiService->getOneArticleApi($articleId);
+    #[Route('/api/article', name: 'one_article_by_id_from_api')]
+    public function getOneArticle()
+    {
+        $articleId = 1;
+        $responseObject = $this->customApiService->getOneArticleApi($articleId);
         
-    //     return $responseObject; 
-    // }
+        return $responseObject;
+    }
 
 }
