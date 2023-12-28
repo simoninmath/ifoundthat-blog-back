@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Service\CustomApiService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,7 +15,7 @@ class ArticleController extends AbstractController
         private CustomApiService $customApiService  // use DI with controller for more than 1 method
     ){} 
 
-    #[Route('/api/articles', name: 'all_articles_from_api')]
+    #[Route('/api/articles', name: 'get_all_articles_from_api')]
     public function getAllArticles()
     {
         $responseObject = $this->customApiService->getAllArticlesApi();
@@ -21,7 +23,7 @@ class ArticleController extends AbstractController
         return $responseObject;
     }
 
-    #[Route('/api/article', name: 'one_article_by_id_from_api')]
+    #[Route('/api/article', name: 'get_one_article_by_id_from_api')]
     public function getOneArticle()
     {
         $articleId = 1;
@@ -29,5 +31,24 @@ class ArticleController extends AbstractController
         
         return $responseObject;
     }
+
+
+    #[Route('/api/create-article', name: 'create_article_from_api_with_post_method')]
+    public function createOneArticle(Request $request)
+    {
+        // Get data from POST method
+        $requestData = json_decode($request->getContent(), true);
+    
+        // Use data to create a new article with EntityManager
+        $article = $this->customApiService->createArticle($requestData);
+    
+        // Return the answer according to the condition
+        if ($article) {
+            return new JsonResponse(['message' => 'Article created'], Response::HTTP_CREATED);
+        } else {
+            return new JsonResponse(['message' => 'Failed to create article'], Response::HTTP_BAD_REQUEST);
+        }
+    }
+    
 
 }
