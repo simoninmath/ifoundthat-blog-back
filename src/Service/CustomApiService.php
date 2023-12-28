@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use App\Repository\NewsletterRepository;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,9 @@ class CustomApiService
     public function __construct(
         private NewsletterRepository $newsletterRepository,
         private ArticleRepository $articleRepository,
-        private EntityManager $entityManager
+        private EntityManagerInterface $entityManager
     ) {
+        $this->entityManager = $entityManager;
     }
 
     // Method that use Newsletter API
@@ -88,7 +90,7 @@ class CustomApiService
     public function createArticle(Request $request): Response
     {
         $requestData = json_decode($request->getContent(), true);
-        dd('createArticle Method works!', $requestData);
+        // dd('createArticle Method works!', $requestData);
 
         try {
             $newArticle = new Article();

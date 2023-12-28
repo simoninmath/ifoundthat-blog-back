@@ -40,7 +40,7 @@ class ArticleController extends AbstractController
         $requestData = json_decode($request->getContent(), true);
     
         // Use data to create a new article with EntityManager
-        $article = $this->customApiService->createArticle($requestData);
+        $article = $this->customApiService->createArticle($request);
     
         // Return the answer according to the condition
         if ($article) {
