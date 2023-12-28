@@ -40,7 +40,7 @@ class CustomApiService
     public function getAllArticlesApi(): Response
     {
         $allArticles = $this->articleRepository->getAllArticlesWithDql();  // Get all articles
-        dd('Test article from CustomApiService', $allArticles);
+        // dd('Test article from CustomApiService', $allArticles);
 
         try {
             $response = new JsonResponse();
@@ -58,25 +58,25 @@ class CustomApiService
     }
 
 
-    public function getOneArticleApi(int $articleId): Response
-    {
-        $oneArticle = $this->articleRepository->getOneArticleByIdWithDql($articleId);
-        // dd('Test article from CustomApiService', $oneArticle);
+    // public function getOneArticleApi(int $articleId): Response
+    // {
+    //     $oneArticle = $this->articleRepository->getOneArticleByIdWithDql($articleId);
+    //     // dd('Test article from CustomApiService', $oneArticle);
 
-        try {
-            $response = new JsonResponse();
-            $response->setContent(json_encode($oneArticle, JSON_FORCE_OBJECT));
-            $response->headers->set('Content-Type', 'application/json');
-        } catch (\Exception $exception) {
-            $response = new JsonResponse(
-                'error!' . $exception->getMessage(),
-                JsonResponse::HTTP_BAD_REQUEST,
-                ['content-type' => 'application/json']
-            );
-        }
+    //     try {
+    //         $response = new JsonResponse();
+    //         $response->setContent(json_encode($oneArticle, JSON_FORCE_OBJECT));
+    //         $response->headers->set('Content-Type', 'application/json');
+    //     } catch (\Exception $exception) {
+    //         $response = new JsonResponse(
+    //             'error!' . $exception->getMessage(),
+    //             JsonResponse::HTTP_BAD_REQUEST,
+    //             ['content-type' => 'application/json']
+    //         );
+    //     }
     
-        return $response;
-    }
+    //     return $response;
+    // }
     
 
 }
