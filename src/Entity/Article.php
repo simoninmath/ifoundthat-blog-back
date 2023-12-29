@@ -17,6 +17,13 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
+/**
+ * Secured resource.
+ */
+#[Get]
+#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+#[GetCollection]
+#[Post(security: "is_granted('ROLE_ADMIN')")]
 #[ApiResource (
     operations: [
         // new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
@@ -25,19 +32,11 @@ use ApiPlatform\Metadata\Patch;
         new Put(),
         new Delete(),
         new Patch(),
-    ]
+    ],
+    security: "is_granted('ROLE_USER')"
 )
 ]
 
-/**
- * Secured resource.
- */
-#[ApiResource(security: "is_granted('ROLE_USER')")]
-#[Get]
-#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
-#[GetCollection]
-#[Post(security: "is_granted('ROLE_ADMIN')")]
-#[ORM\Entity]
 class Article
 {
     #[ORM\Id]
