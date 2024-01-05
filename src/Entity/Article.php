@@ -26,9 +26,9 @@ use ApiPlatform\Metadata\Patch;
 #[Post(security: "is_granted('ROLE_ADMIN')")]
 #[ApiResource (
     operations: [
-        // new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
-        // new Post(),
-        // new Get(normalizationContext: ['groups' => ['read:Article:item']]),
+        new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
+        new Post(),
+        new Get(normalizationContext: ['groups' => ['read:Article:item']]),
         new Put(),
         new Delete(),
         new Patch(),

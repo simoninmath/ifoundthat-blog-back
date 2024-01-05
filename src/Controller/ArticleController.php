@@ -15,7 +15,7 @@ class ArticleController extends AbstractController
         private CustomApiService $customApiService  // use DI with controller for more than 1 method
     ){} 
 
-    #[Route('/api/articles', name: 'get_all_articles_from_api')]
+    #[Route('/api/all-articles-with-manual-api', name: 'get_all_articles_from_api')]
     public function getAllArticles()
     {
         $responseObject = $this->customApiService->getAllArticlesApi();
@@ -23,7 +23,8 @@ class ArticleController extends AbstractController
         return $responseObject;
     }
 
-    #[Route('/api/article', name: 'get_one_article_by_id_from_api')]
+    
+    #[Route('/api/one-article-with-manual-api', name: 'get_one_article_by_id_from_api')]
     public function getOneArticle()
     {
         $articleId = 1;
@@ -33,12 +34,13 @@ class ArticleController extends AbstractController
     }
 
 
-    #[Route('/api/create-article', name: 'create_article_from_api_with_post_method')]
+    #[Route('/api/create-one-article', name: 'create_article_from_api_with_post_method')]
     public function createOneArticle(Request $request)
     {
+        dd('affichage POST', $request);
         // Get data from POST method
-        $requestData = json_decode($request->getContent(), true);
-    
+        $request = json_decode($request->getContent(), true);
+        
         // Use data to create a new article with EntityManager
         $article = $this->customApiService->createArticle($request);
     
@@ -50,5 +52,4 @@ class ArticleController extends AbstractController
         }
     }
     
-
 }
