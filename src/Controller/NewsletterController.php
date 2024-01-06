@@ -13,7 +13,7 @@ class NewsletterController extends AbstractController
         private CustomApiService $customApiService  // use DI with controller for more than 1 method
     ){} 
 
-    #[Route('/api/newsletter', name: 'newsletter_users_from_api')]
+    #[Route('/api/newsletters', name: 'newsletter_users_from_api')]
     public function getNewsletters()
     {
         $responseObject = $this->customApiService->getNewslettersApi();
