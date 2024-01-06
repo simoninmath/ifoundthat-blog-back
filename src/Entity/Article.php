@@ -17,9 +17,7 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-/**
- * Secured resource.
- */
+# Secure APIPlatform requests
 #[Get]
 #[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
 #[GetCollection]
