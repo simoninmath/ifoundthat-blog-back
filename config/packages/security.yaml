@@ -60,9 +60,11 @@ security:
         - { path: ^/api$,                   roles: PUBLIC_ACCESS }
         - { path: ^/api/login$,             roles: PUBLIC_ACCESS }
         - { path: ^/api/register$,          roles: PUBLIC_ACCESS }
+        - { path: ^/api/articles/,          roles: PUBLIC_ACCESS }
+        - { path: ^/api/articles$,          roles: PUBLIC_ACCESS }
         # Routes exceptions
-        - { path: ^/api/public_articles/,   roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles$,   roles: PUBLIC_ACCESS }
+        # - { path: ^/api/public_articles/,   roles: PUBLIC_ACCESS }
+        # - { path: ^/api/public_articles$,   roles: PUBLIC_ACCESS }
         - { path: ^/api/,                   roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter api     
 
 when@test:
