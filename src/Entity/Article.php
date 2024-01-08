@@ -24,14 +24,14 @@ use ApiPlatform\Metadata\Patch;
 #[Post(security: "is_granted('ROLE_ADMIN')")]
 #[ApiResource (
     operations: [
-        new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]),
+        new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]), # Create an instance of GetCollection operation and normalize it with groups option
         new Post(),
         new Get(normalizationContext: ['groups' => ['read:Article:item']]),
         new Put(),
         new Delete(),
         new Patch(),
         new Get(
-            normalizationContext: ['groups' => ['read:Article:item:public']],
+            normalizationContext: ['groups' => ['read:Article:item:public']],  # Specify the which request is public
             name:'public_article',
             uriTemplate:'public_articles/{id}'
         ), 
@@ -41,7 +41,7 @@ use ApiPlatform\Metadata\Patch;
             uriTemplate:'public_articles'
         ), 
     ],
-    security: "is_granted('ROLE_USER')"
+    #security: "is_granted('ROLE_ADMIN')"
 )
 ]
 
@@ -50,23 +50,29 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups ([
+    #[Groups ([  # Apply normalize options to modify the content of the request returned
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private ?string $chapo = null;
 
@@ -76,14 +82,18 @@ class Article
     #[ORM\Column]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -91,7 +101,9 @@ class Article
     #[ORM\JoinColumn(nullable: false)]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private ?Categorie $categorie = null;
 
@@ -102,14 +114,18 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private Collection $comments;
 
     #[ORM\ManyToMany(targetEntity: Tag::class, mappedBy: 'article')]
     #[Groups ([
         'read:Article:item',
-        'read:Article:collection'
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
     ])]
     private Collection $tags;
 
