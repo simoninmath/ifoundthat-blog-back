@@ -30,6 +30,16 @@ use ApiPlatform\Metadata\Patch;
         new Put(),
         new Delete(),
         new Patch(),
+        new Get(
+            normalizationContext: ['groups' => ['read:Article:item:public']],
+            name:'public_article',
+            uriTemplate:'public_articles/{id}'
+        ), 
+        new GetCollection(
+            normalizationContext: ['groups' => ['read:Article:collection:public']],
+            name:'public_articles',
+            uriTemplate:'public_articles'
+        ), 
     ],
     security: "is_granted('ROLE_USER')"
 )
