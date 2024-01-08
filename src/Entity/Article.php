@@ -77,6 +77,12 @@ class Article
     private ?string $chapo = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups ([
+        'read:Article:item',
+        'read:Article:collection',
+        'read:Article:item:public',
+        'read:Article:collection:public'
+    ])]
     private ?string $content = null;
 
     #[ORM\Column]
