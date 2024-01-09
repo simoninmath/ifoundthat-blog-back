@@ -135,6 +135,12 @@ class Article
     ])]
     private Collection $tags;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    #[ORM\Column]
+    private ?bool $published = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -257,6 +263,8 @@ class Article
         return $this;
     }
 
+    //TODO Ajouter une méthode pour modifier le commentaire
+
     public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
@@ -292,6 +300,30 @@ class Article
         if ($this->tags->removeElement($tag)) {
             $tag->removeArticle($this);
         }
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): static
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function isPublished(): ?bool
+    {
+        return $this->published;
+    }
+
+    public function setPublished(bool $published): static
+    {
+        $this->published = $published;
 
         return $this;
     }
