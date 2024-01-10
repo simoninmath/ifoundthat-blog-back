@@ -37,8 +37,8 @@ class NewsletterController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $newsletter->setTitle($data['title']);
-        $newsletter->setContent($data['content']);
+        $newsletter->setId($data['id']);
+        $newsletter->setEmail($data['email']);
 
         $entityManager->persist($newsletter);
         $entityManager->flush();
@@ -53,8 +53,8 @@ class NewsletterController extends AbstractController
     {
         $data = json_decode($request->getContent(), true);
 
-        $newsletter->setTitle($data['title'] ?? $newsletter->getTitle());
-        $newsletter->setContent($data['content'] ?? $newsletter->getContent());
+        $newsletter->setId($data['id'] ?? $newsletter->getId());
+        $newsletter->setEmail($data['email'] ?? $newsletter->getEmail());
 
         $entityManager->flush();
 
