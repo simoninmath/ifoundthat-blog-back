@@ -19,11 +19,11 @@ class ArticleVoter extends Voter
     {
         $this->security = $security;
     }
-
-
+    
+    
     protected function supports(string $attribute, mixed $subject): bool
     {
-        $supportsAttribute = in_array($attribute, ['ARTICLE_CREATE', 'ARTICLE_READ', 'ARTICLE_EDIT', 'ARTICLE_DELETE']);
+        $supportsAttribute = in_array($attribute, ['ARTICLE_POST', 'ARTICLE_PUT', 'ARTICLE_DELETE', 'ARTICLE_PATCH']);
         $supportsSubject = $subject instanceof Article;
 
         return $supportsAttribute && $supportsSubject;
@@ -50,11 +50,13 @@ class ArticleVoter extends Voter
                     return true;
                 }
                 break;
+
             case 'ARTICLE_EDIT':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;
                 }
                 break;
+
             case 'ARTICLE_DELETE':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;

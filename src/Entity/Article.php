@@ -17,31 +17,50 @@ use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-# Secure APIPlatform requests
-#[Get]
-#[Put(security: "is_granted('ROLE_ADMIN') or object.owner == user")]
+// Secure APIPlatform requests
 #[GetCollection]
+#[Get]
 #[Post(security: "is_granted('ROLE_ADMIN')")]
+#[Put(security: "is_granted('ROLE_ADMIN')")]
+#[Delete(security: "is_granted('ROLE_ADMIN')")]
 #[ApiResource (
     operations: [
-        new GetCollection(normalizationContext: ['groups' => ['read:Article:collection']]), # Create an instance of GetCollection operation and normalize it with groups option
-        new Post(),
-        new Get(normalizationContext: ['groups' => ['read:Article:item']]),
-        new Put(),
-        new Delete(),
-        new Patch(),
-        new Get(
-            normalizationContext: ['groups' => ['read:Article:item:public']],  # Specify the which request is public
-            name:'public_article',
-            uriTemplate:'public_articles/{id}'
-        ), 
         new GetCollection(
-            normalizationContext: ['groups' => ['read:Article:collection:public']],
+            // normalizationContext: ['groups' => ['read:Article:collection']],  
+            normalizationContext: ['groups' => ['read:Article:collection:public']],  // Create an instance of GetCollection operation and normalize it with groups option
             name:'public_articles',
             uriTemplate:'public_articles'
-        ), 
+        ),  
+        new Post(
+            security: "is_granted('ARTICLE_CREATE', object)",
+            name:'public_articles_create',
+            uriTemplate:'public_articles_create'
+        ),
+        new Get(
+            // normalizationContext: ['groups' => ['read:Article:item']],
+            normalizationContext: ['groups' => ['read:Article:item:public']],  // Specify which request is public
+            name:'public_article',
+            uriTemplate:'public_articles/{id}'
+        ),
+        new Put(
+            normalizationContext: ['groups' => ['write:Article:item']], 
+            security: "is_granted('ARTICLE_PUT', object)",
+            name:'protected_articles_put',
+            uriTemplate:'protected_articles_put'
+        ),
+        new Delete(
+            security: "is_granted('ARTICLE_DELETE', object)",
+            name:'protected_articles_delete',
+            uriTemplate:'protected_articles_delete'
+        ),
+        new Patch(
+            normalizationContext: ['groups' => ['write:Article:item']],
+            security: "is_granted('ARTICLE_PATCH', object)",
+            name:'protected_articles_patch',
+            uriTemplate:'protected_articles_patch'
+        ),
+
     ],
-    #security: "is_granted('ROLE_ADMIN')"
 )
 ]
 
