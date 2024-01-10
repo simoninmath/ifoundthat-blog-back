@@ -38,13 +38,15 @@ class ArticleVoter extends Voter
         }
 
         switch ($attribute) {
-            case 'ARTICLE_READ':
-                if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
-                    return true;
-                }
-                break;
+            // case 'ARTICLE_READ':
+            //     if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
+            //         return true;
+            //     }
+            //     break;
+            
+            // Only Admin can create, edit and delete an article
             case 'ARTICLE_CREATE':
-                if($this->security->isGranted('ROLE_USER')){
+                if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){  
                     return true;
                 }
                 break;
