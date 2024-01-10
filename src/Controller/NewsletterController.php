@@ -19,7 +19,7 @@ class NewsletterController extends AbstractController
     {
         $newslettersList = $newsletterRepo->findAll();
 
-        return $this->json($newsletterRepo);
+        return $this->json($newslettersList);
     }
 
 
