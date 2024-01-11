@@ -35,12 +35,11 @@ class NewsletterController extends AbstractController
     #[Route('/api/custom/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
     public function createNewsletter(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $newsletter = new Newsletter;  // Need to instanciate a new Newsletter Class to avoid 500 error
+        $newsletter = new Newsletter;  // Need to instanciate a new Newsletter Class here (not with DI), to avoid 500 error
         $data = json_decode($request->getContent(), true);
 
         $newsletter->setId($data['id']);
         $newsletter->setEmail($data['email']);
-        // $newsletter->setCreatedAt($data['createdAt']);
 
         $entityManager->persist($newsletter);
         $entityManager->flush();
