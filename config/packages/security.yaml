@@ -63,6 +63,8 @@ security:
         - { path: ^/api/public_articles/,       roles: PUBLIC_ACCESS }
         - { path: ^/api/public_articles$,       roles: PUBLIC_ACCESS }
         - { path: ^/api/public_articles_post$,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_newsletters_post$,  roles: PUBLIC_ACCESS }
+        # - { path: ^/api/protected_newsletters_put$,  roles: PUBLIC_ACCESS }
         # Routes exceptions
         - { path: ^/api/,                       roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter in the API               
 

@@ -2,22 +2,91 @@
 
 namespace App\Controller;
 
-use App\Service\CustomApiService;
+use App\Entity\Newsletter;
+use App\Repository\NewsletterRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class NewsletterController extends AbstractController
 {
 
-    public function __construct(
-        private CustomApiService $customApiService  // use DI with controller for more than 1 method
-    ){} 
-
-    #[Route('/api/newsletters', name: 'newsletter_users_from_api')]
-    public function getNewsletters()
+    #CRUD: Get Collection
+    #[Route('/api/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]
+    public function listNewsletters(NewsletterRepository $newsletterRepo): Response
     {
-        $responseObject = $this->customApiService->getNewslettersApi();
+        $newslettersList = $newsletterRepo->findAll();
 
-        return $responseObject;
+        return $this->json($newslettersList);
     }
+
+
+    #CRUD: Get
+    #[Route('/api/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]
+    public function showNewsletter(Newsletter $newsletter): Response
+    {
+        return $this->json($newsletter);
+    }
+
+
+    #CRUD: Post
+    #[Route('/api/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
+    public function createNewsletter(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $newsletter = new Newsletter;  // Need to instanciate a new Newsletter Class to avoid 500 error
+        $data = json_decode($request->getContent(), true);
+
+        $newsletter->setId($data['id']);
+        $newsletter->setEmail($data['email']);
+        // $newsletter->setCreatedAt($data['createdAt']);
+
+        $entityManager->persist($newsletter);
+        $entityManager->flush();
+
+        return $this->json($newsletter);
+    }
+
+
+    #CRUD: Put
+    #[Route('/api/protected_newsletters_put/{id}', name: 'newsletters_put', methods: ['PUT'])]
+    public function updateNewsletter(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $newsletter->setId($data['id'] ?? $newsletter->getId());
+        $newsletter->setEmail($data['email'] ?? $newsletter->getEmail());
+
+        $entityManager->flush();
+
+        return $this->json($newsletter);
+    }
+
+
+    #CRUD: Delete
+    #[Route('/api/protected_newsletters_delete/', name: 'delete_newsletter', methods: ['DELETE'])]
+    public function deleteNewsletter(Newsletter $newsletter, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($newsletter);
+        $entityManager->flush();
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
+    }
+
+
+    #CRUD: Patch
+    #[Route('/api/protected_newsletters_patch/{id}', name: 'newsletters_patch', methods: ['PATCH'])]
+    public function updateNewsletterWithPatch(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $newsletter->setId($data['id'] ?? $newsletter->getId());
+        $newsletter->setEmail($data['email'] ?? $newsletter->getEmail());
+
+        $entityManager->flush();
+
+        return $this->json($newsletter);
+    }
+
 }

@@ -23,6 +23,7 @@ class NewsletterRepository extends ServiceEntityRepository
     }
 
     // DQL request which return Array before encoding in JSON format
+    //TODO changer annotation en PHP8
     /**
      * @return array
      */
@@ -39,4 +40,5 @@ class NewsletterRepository extends ServiceEntityRepository
 
         return $result;
     }
+    //TODO créer requêtes pour suite CRUD
 }
