@@ -62,18 +62,7 @@ class NewsletterController extends AbstractController
         return $this->json($newsletter);
     }
 
-
-    #CRUD: Delete
-    #[Route('/api/custom/protected_newsletters_delete/{id}', name: 'delete_newsletter', methods: ['DELETE'])]
-    public function deleteNewsletter(Newsletter $newsletter, EntityManagerInterface $entityManager): Response
-    {
-        $entityManager->remove($newsletter);
-        $entityManager->flush();
-
-        return new Response(null, Response::HTTP_NO_CONTENT);
-    }
-
-
+    
     #CRUD: Patch
     #[Route('/api/custom/protected_newsletters_patch/{id}', name: 'newsletters_patch', methods: ['PATCH'])]
     public function updateNewsletterWithPatch(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
@@ -86,6 +75,17 @@ class NewsletterController extends AbstractController
         $entityManager->flush();
 
         return $this->json($newsletter);
+    }
+
+
+    #CRUD: Delete
+    #[Route('/api/custom/protected_newsletters_delete/{id}', name: 'delete_newsletter', methods: ['DELETE'])]
+    public function deleteNewsletter(Newsletter $newsletter, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($newsletter);
+        $entityManager->flush();
+
+        return new Response(null, Response::HTTP_NO_CONTENT);
     }
 
 }
