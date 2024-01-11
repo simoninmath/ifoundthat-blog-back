@@ -14,7 +14,7 @@ class NewsletterController extends AbstractController
 {
 
     #CRUD: Get Collection
-    #[Route('/api/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]
+    #[Route('/api/custom/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]
     public function listNewsletters(NewsletterRepository $newsletterRepo): Response
     {
         $newslettersList = $newsletterRepo->findAll();
@@ -24,7 +24,7 @@ class NewsletterController extends AbstractController
 
 
     #CRUD: Get
-    #[Route('/api/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]
+    #[Route('/api/custom/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]
     public function showNewsletter(Newsletter $newsletter): Response
     {
         return $this->json($newsletter);
@@ -32,7 +32,7 @@ class NewsletterController extends AbstractController
 
 
     #CRUD: Post
-    #[Route('/api/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
+    #[Route('/api/custom/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
     public function createNewsletter(Request $request, EntityManagerInterface $entityManager): Response
     {
         $newsletter = new Newsletter;  // Need to instanciate a new Newsletter Class to avoid 500 error
@@ -50,7 +50,7 @@ class NewsletterController extends AbstractController
 
 
     #CRUD: Put
-    #[Route('/api/protected_newsletters_put/{id}', name: 'newsletters_put', methods: ['PUT'])]
+    #[Route('/api/custom/protected_newsletters_put/{id}', name: 'newsletters_put', methods: ['PUT'])]
     public function updateNewsletter(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
         $data = json_decode($request->getContent(), true);
@@ -65,7 +65,7 @@ class NewsletterController extends AbstractController
 
 
     #CRUD: Delete
-    #[Route('/api/protected_newsletters_delete/', name: 'delete_newsletter', methods: ['DELETE'])]
+    #[Route('/api/custom/protected_newsletters_delete/{id}', name: 'delete_newsletter', methods: ['DELETE'])]
     public function deleteNewsletter(Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($newsletter);
@@ -76,7 +76,7 @@ class NewsletterController extends AbstractController
 
 
     #CRUD: Patch
-    #[Route('/api/protected_newsletters_patch/{id}', name: 'newsletters_patch', methods: ['PATCH'])]
+    #[Route('/api/custom/protected_newsletters_patch/{id}', name: 'newsletters_patch', methods: ['PATCH'])]
     public function updateNewsletterWithPatch(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
         $data = json_decode($request->getContent(), true);
