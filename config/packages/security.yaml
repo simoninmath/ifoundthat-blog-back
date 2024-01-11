@@ -57,14 +57,24 @@ security:
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
         # Routes always public
-        - { path: ^/api$,                       roles: PUBLIC_ACCESS }
-        - { path: ^/api/login$,                 roles: PUBLIC_ACCESS }
-        - { path: ^/api/register$,              roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles/,       roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles$,       roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles_post$,  roles: PUBLIC_ACCESS }
+        - { path: ^/api$,                           roles: PUBLIC_ACCESS }
+        - { path: ^/api/login$,                     roles: PUBLIC_ACCESS }
+        - { path: ^/api/register$,                  roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_collection/,     roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_collection$,     roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_by_id/,     roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_by_id$,     roles: PUBLIC_ACCESS }
+
         # Routes exceptions
-        - { path: ^/api/,                       roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter in the API               
+        - { path: ^/api/,                           roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter in the API
+        - { path: ^/api/protected_articles_post$,   roles: IS_AUTHENTICATED_FULLY }             
+        - { path: ^/api/protected_articles_post/,   roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/protected_articles_put$,   roles: IS_AUTHENTICATED_FULLY }             
+        - { path: ^/api/protected_articles_put/,   roles: IS_AUTHENTICATED_FULLY }              
+        - { path: ^/api/protected_articles_patch$,   roles: IS_AUTHENTICATED_FULLY }             
+        - { path: ^/api/protected_articles_patch/,   roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api/protected_articles_delete$,   roles: IS_AUTHENTICATED_FULLY }             
+        - { path: ^/api/protected_articles_delete/,   roles: IS_AUTHENTICATED_FULLY }               
 
 when@test:
     security:

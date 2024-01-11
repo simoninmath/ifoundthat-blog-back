@@ -28,36 +28,37 @@ use ApiPlatform\Metadata\Patch;
         new GetCollection(
             // normalizationContext: ['groups' => ['read:Article:collection']],  
             normalizationContext: ['groups' => ['read:Article:collection:public']],  // Create an instance of GetCollection operation and normalize it with groups option
-            name:'public_articles',
-            uriTemplate:'public_articles'
+            name:'public_articles_get_collection',
+            uriTemplate:'public_articles_get_collection'
         ),  
         new Post(
-            security: "is_granted('ARTICLE_CREATE', object)",
-            name:'public_articles_create',
-            uriTemplate:'public_articles_create'
+            normalizationContext: ['groups' => ['write:Article:item:protected']],
+            security: "is_granted('ARTICLE_POST', object)",
+            name:'protected_articles_post',
+            uriTemplate:'protected_articles_post'
         ),
         new Get(
             // normalizationContext: ['groups' => ['read:Article:item']],
             normalizationContext: ['groups' => ['read:Article:item:public']],  // Specify which request is public
-            name:'public_article',
-            uriTemplate:'public_articles/{id}'
+            name:'public_article_get_by_id',
+            uriTemplate:'public_articles_get_by_id/{id}'
         ),
         new Put(
-            normalizationContext: ['groups' => ['write:Article:item']], 
+            // normalizationContext: ['groups' => ['write:Article:item:protected']], 
             security: "is_granted('ARTICLE_PUT', object)",
             name:'protected_articles_put',
-            uriTemplate:'protected_articles_put'
+            uriTemplate:'protected_articles_put/{id}'
         ),
         new Delete(
             security: "is_granted('ARTICLE_DELETE', object)",
             name:'protected_articles_delete',
-            uriTemplate:'protected_articles_delete'
+            uriTemplate:'protected_articles_delete/{id}'
         ),
         new Patch(
-            normalizationContext: ['groups' => ['write:Article:item']],
+            // normalizationContext: ['groups' => ['write:Article:item:protected']],
             security: "is_granted('ARTICLE_PATCH', object)",
             name:'protected_articles_patch',
-            uriTemplate:'protected_articles_patch'
+            uriTemplate:'protected_articles_patch/{id}'
         ),
 
     ],
@@ -73,7 +74,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected' 
     ])]
     private ?int $id = null;
 
@@ -82,7 +84,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private ?string $title = null;
 
@@ -91,7 +94,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private ?string $chapo = null;
 
@@ -100,7 +104,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private ?string $content = null;
 
@@ -109,7 +114,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private ?\DateTimeImmutable $createdAt = null;
 
@@ -118,7 +124,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private ?\DateTimeImmutable $updatedAt = null;
 
@@ -128,7 +135,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private ?Categorie $categorie = null;
 
@@ -141,7 +149,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private Collection $comments;
 
@@ -150,7 +159,8 @@ class Article
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
-        'read:Article:collection:public'
+        'read:Article:collection:public',
+        'write:Article:item:protected'
     ])]
     private Collection $tags;
 

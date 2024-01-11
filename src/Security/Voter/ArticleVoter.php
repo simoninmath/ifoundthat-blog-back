@@ -45,19 +45,25 @@ class ArticleVoter extends Voter
             //     break;
             
             // Only Admin can create, edit and delete an article
-            case 'ARTICLE_CREATE':
+            case 'ARTICLE_POST':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){  
                     return true;
                 }
                 break;
 
-            case 'ARTICLE_EDIT':
+            case 'ARTICLE_PUT':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;
                 }
                 break;
 
             case 'ARTICLE_DELETE':
+                if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
+                    return true;
+                }
+                break;
+                
+            case 'ARTICLE_PATCH':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;
                 }
