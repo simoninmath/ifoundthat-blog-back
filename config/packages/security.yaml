@@ -56,14 +56,19 @@ security:
         # - { path: ^/api/login, roles: PUBLIC_ACCESS }
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
-        # Routes always public
+        # Those routes below must be the same in Angular HttpClient
+        # Routes
         - { path: ^/api$,                       roles: PUBLIC_ACCESS }
         - { path: ^/api/login$,                 roles: PUBLIC_ACCESS }
         - { path: ^/api/register$,              roles: PUBLIC_ACCESS }
         - { path: ^/api/public_articles/,       roles: PUBLIC_ACCESS }
         - { path: ^/api/public_articles$,       roles: PUBLIC_ACCESS }
         - { path: ^/api/public_articles_post$,  roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_newsletters_post$,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/custom/public_newsletters_post/,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/custom/public_newsletters_post$,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/custom/protected_newsletters_put/,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/custom/protected_newsletters_put$,  roles: PUBLIC_ACCESS }
+
         # - { path: ^/api/protected_newsletters_put$,  roles: PUBLIC_ACCESS }
         # Routes exceptions
         - { path: ^/api/,                       roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter in the API               
