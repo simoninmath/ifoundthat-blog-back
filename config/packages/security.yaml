@@ -57,16 +57,21 @@ security:
         # - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
         # Routes always public
-        - { path: ^/api$,                       roles: PUBLIC_ACCESS }
-        - { path: ^/api/login$,                 roles: PUBLIC_ACCESS }
-        - { path: ^/api/register$,              roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles/,       roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles$,       roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles_post$,  roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_form_post/,      roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_form_post$,      roles: PUBLIC_ACCESS }
+        - { path: ^/api$,                                       roles: PUBLIC_ACCESS }
+        - { path: ^/api/login$,                                 roles: PUBLIC_ACCESS }
+        - { path: ^/api/register$,                              roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_collection/,        roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_collection$,        roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_by_id/,             roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_articles_get_by_id$,             roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_form_post/,                      roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_form_post$,                      roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_newsletter_post/,                roles: PUBLIC_ACCESS }
+        - { path: ^/api/public_newsletter_post$,                roles: PUBLIC_ACCESS }
+        # - { path: ^/api/forms/,                      roles: PUBLIC_ACCESS }
+        # - { path: ^/api/forms$,                      roles: PUBLIC_ACCESS }
         # Routes exceptions
-        - { path: ^/api/,                       roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter in the API               
+        - { path: ^/api/,                              roles: IS_AUTHENTICATED_FULLY }  # Auth is requiered to enter in the API               
 
 when@test:
     security:
