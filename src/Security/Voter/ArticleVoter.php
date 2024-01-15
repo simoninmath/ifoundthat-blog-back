@@ -19,11 +19,11 @@ class ArticleVoter extends Voter
     {
         $this->security = $security;
     }
-    
-    
+
+
     protected function supports(string $attribute, mixed $subject): bool
     {
-        $supportsAttribute = in_array($attribute, ['ARTICLE_POST', 'ARTICLE_PUT', 'ARTICLE_DELETE', 'ARTICLE_PATCH']);
+        $supportsAttribute = in_array($attribute, ['ARTICLE_CREATE', 'ARTICLE_READ', 'ARTICLE_EDIT', 'ARTICLE_DELETE']);
         $supportsSubject = $subject instanceof Article;
 
         return $supportsAttribute && $supportsSubject;
@@ -38,25 +38,21 @@ class ArticleVoter extends Voter
         }
 
         switch ($attribute) {
-            // case 'ARTICLE_READ':
-            //     if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
-            //         return true;
-            //     }
-            //     break;
-            
-            // Only Admin can create, edit and delete an article
-            case 'ARTICLE_CREATE':
-                if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){  
+            case 'ARTICLE_READ':
+                if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;
                 }
                 break;
-
+            case 'ARTICLE_CREATE':
+                if($this->security->isGranted('ROLE_USER')){
+                    return true;
+                }
+                break;
             case 'ARTICLE_EDIT':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;
                 }
                 break;
-
             case 'ARTICLE_DELETE':
                 if($this->security->isGranted('ROLE_ADMIN') || $subject->getUser() == $user){
                     return true;
