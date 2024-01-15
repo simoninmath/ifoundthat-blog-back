@@ -32,9 +32,9 @@ use ApiPlatform\Metadata\Patch;
             uriTemplate:'public_articles'
         ),  
         new Post(
-            security: "is_granted('ARTICLE_CREATE', object)",
-            name:'public_articles_create',
-            uriTemplate:'public_articles_create'
+            security: "is_granted('ARTICLE_POST', object)",
+            name:'public_articles_post',
+            uriTemplate:'public_articles_post' //TODO modifier la route
         ),
         new Get(
             // normalizationContext: ['groups' => ['read:Article:item']],
