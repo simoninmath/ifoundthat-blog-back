@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class NewsletterController extends AbstractController
 {
 
-    #CRUD: Get Collection
+    #CRUD: Get Collection => TESTED! OK
     #[Route('/api/custom/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]
     public function listNewsletters(NewsletterRepository $newsletterRepo): Response
     {
@@ -23,7 +23,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Get
+    #CRUD: Get => TESTED! OK
     #[Route('/api/custom/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]
     public function showNewsletter(Newsletter $newsletter): Response
     {
@@ -31,7 +31,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Post
+    #CRUD: Post => TESTED! OK
     #[Route('/api/custom/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
     public function createNewsletter(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -48,7 +48,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Put
+    #CRUD: Put => TESTED! OK
     #[Route('/api/custom/protected_newsletters_put/{id}', name: 'newsletters_put', methods: ['PUT'])]
     public function updateNewsletter(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
@@ -63,7 +63,7 @@ class NewsletterController extends AbstractController
     }
 
     
-    #CRUD: Patch
+    #CRUD: Patch => TESTED! OK
     #[Route('/api/custom/protected_newsletters_patch/{id}', name: 'newsletters_patch', methods: ['PATCH'])]
     public function updateNewsletterWithPatch(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
@@ -78,7 +78,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Delete
+    #CRUD: Delete => TESTED! OK
     #[Route('/api/custom/protected_newsletters_delete/{id}', name: 'delete_newsletter', methods: ['DELETE'])]
     public function deleteNewsletter(Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
