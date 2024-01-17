@@ -17,23 +17,22 @@ use Doctrine\Persistence\ManagerRegistry;
 
 class NewsletterRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    // Constructor for the NewsletterRepository.    
+    public function __construct(
+        ManagerRegistry $registry
+        )
     {
         parent::__construct($registry, Newsletter::class);
     }
-
-    // DQL request which return Array before encoding in JSON format
-    /**
-     * @return array
-     */
-    public function getUsersFromNewsletterWithDql(): array
+   
+    // Fetch information from newsletters using DQL (Doctrine Query Language)
+    public function fetchInfoFromNewsletterWithDql(): array
     {
-        // nlu = NewsLetter User
-        $dql = "SELECT
-               nlu.id, nlu.email
-               FROM App\Entity\Newsletter as nlu
-               ";
+         // DQL request which return Array
+        $dql = "SELECT newsletterinfo.id, newsletterinfo.email  
+               FROM App\Entity\Newsletter AS newsletterinfo";
 
+        // Create a query using the EntityManager and execute it
         $query = $this->getEntityManager()->createQuery($dql);
         $result = $query->getResult();
 

@@ -22,7 +22,11 @@ class NewsletterService
     public function getUsersFromNewsletterAPI(): JsonResponse
     {
         try {
+<<<<<<< HEAD
             $response = $this->httpClient->request('GET', 'https://127.0.0.1:8000/api/protected_newsletter_get_collection');
+=======
+            $response = $this->httpClient->request('GET', 'https://127.0.0.1:8000/api/protected_newsletters_get_collection');
+>>>>>>> newsletters
 
             $usersNl = $this->newsletterRepository->getUsersFromNewsletterWithDql();
 
