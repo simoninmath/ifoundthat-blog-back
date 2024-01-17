@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(name: 'app_security_')]
 class RegisterController extends AbstractController
 {
-    #[Route('/register', name: 'register')]
-    public function login()
-    {
-        //return $this->render();
-    }
+    // #[Route('/register', name: 'register')]
+    // public function login()
+    // {
+    //     //return $this->render();
+    // }
 }

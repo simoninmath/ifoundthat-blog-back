@@ -5,7 +5,6 @@ namespace App\Service;
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
 use App\Repository\NewsletterRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -97,6 +96,9 @@ class CustomApiService
             $newArticle->setTitle($requestData['title']);
             $newArticle->setChapo($requestData['chapo']);
             $newArticle->setContent($requestData['content']);
+            $newArticle->setCategorie($requestData['categorie']);
+            $newArticle->setComment($requestData['comment']);
+            $newArticle->setTag($requestData['categorie']);
             $newArticle->setCreatedAt(new \DateTimeImmutable());
             $newArticle->setUpdatedAt(new \DateTimeImmutable());
 

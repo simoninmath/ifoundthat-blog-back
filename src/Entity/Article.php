@@ -23,6 +23,8 @@ use ApiPlatform\Metadata\Patch;
             normalizationContext: ['groups' => ['read:Article:collection']]), # Create an instance of GetCollection operation and normalize it with groups option
         new Post(
             security: "is_granted('ARTICLE_CREATE', object)",
+            name:'protected_article_post',
+            uriTemplate:'protected_article_post'
         ),
         new Get(
             security: "is_granted('ARTICLE_READ', object)",
@@ -40,12 +42,12 @@ use ApiPlatform\Metadata\Patch;
         new Get(
             normalizationContext: ['groups' => ['read:Article:item:public']],  # Specify the which request is public
             name:'public_article',
-            uriTemplate:'public_articles/{id}'
+            uriTemplate:'public_articles_get_by_id/{id}'
         ), 
         new GetCollection(
             normalizationContext: ['groups' => ['read:Article:collection:public']],
             name:'public_articles',
-            uriTemplate:'public_articles'
+            uriTemplate:'public_articles_get_collection'
         ), 
     ],
 )]
@@ -253,7 +255,7 @@ class Article
         return $this->comments;
     }
 
-    public function addComment(Comment $comment): static
+    public function setComment(Comment $comment): static
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
@@ -263,7 +265,7 @@ class Article
         return $this;
     }
 
-    public function removeComment(Comment $comment): static
+    public function deleteComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
@@ -283,7 +285,7 @@ class Article
         return $this->tags;
     }
 
-    public function addTag(Tag $tag): static
+    public function setTag(Tag $tag): static
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);

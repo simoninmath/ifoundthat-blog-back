@@ -17,7 +17,8 @@ class FormController extends AbstractController
     #[Route('api/public_form_post', name: 'form_post')]
     public function fetchFormData(): Response
     {
-        $responseObject = $this->formService->formPost();
+        $request = 
+        $responseObject = $this->formService->formPost($request);
 
         return $responseObject;
     }

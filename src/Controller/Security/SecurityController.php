@@ -13,14 +13,15 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'login')]
     public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUserName = $authenticationUtils->getLastUsername();
-        return $this->render('MON TEMPLATE ANGULAR', [
-            'error' => $error,
-            'lastUserName' => $lastUserName
-        ]);
-    }
+    //     $error = $authenticationUtils->getLastAuthenticationError();
+    //     $lastUserName = $authenticationUtils->getLastUsername();
+    //     return $this->render('MON TEMPLATE ANGULAR', [
+    //         'error' => $error,
+    //         'lastUserName' => $lastUserName
+    //     ]);
+    // }
 
-    #[Route('/logout', name:'logout')]
-    public function logout() {}
+    // #[Route('/logout', name:'logout')]
+    // public function logout() {}
+    }
 }

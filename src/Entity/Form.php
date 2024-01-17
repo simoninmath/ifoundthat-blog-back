@@ -7,7 +7,7 @@ use App\Repository\FormRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-// use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
 // use ApiPlatform\Metadata\Get;
 // use ApiPlatform\Metadata\Put;
@@ -21,7 +21,7 @@ class Form
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    // #[GetCollection]
+    #[GetCollection]
     // #[Get]
     #[Post]
     // #[Put]
@@ -30,33 +30,33 @@ class Form
         operations: [
             new Post(
                 // security: "is_granted('FORM_POST', object)",  //TODO mettre en place le Voter
-                normalizationContext: ['groups' => ['write:Form:public']],
+                // normalizationContext: ['groups' => ['write:Form:public']],
                 name:'public_form_post',
                 uriTemplate:'public_form_post'
             ),
         ]
     )]
-    // #[Groups([
-    //     'write:Form:public'
-    // ])]
+    #[Groups([
+        'write:Form:public'
+    ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
-    // #[Groups([
-    //     'write:Form:public'
-    // ])]
+    #[Groups([
+        'write:Form:public'
+    ])]
     private ?string $name = null;
 
     #[ORM\Column(length: 70)]
-    // #[Groups([
-    //     'write:Form:public'
-    // ])]
+    #[Groups([
+        'write:Form:public'
+    ])]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    // #[Groups([
-    //     'write:Form:public'
-    // ])]
+    #[Groups([
+        'write:Form:public'
+    ])]
     private ?string $message = null;
 
     public function getId(): ?int
