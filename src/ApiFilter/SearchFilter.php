@@ -13,6 +13,7 @@ final class SearchFilter extends AbstractFilter   // Custom search filter for AP
 {
     protected function filterProperty(string $property, $value, QueryBuilder $queryBuilder, QueryNameGeneratorInterface $queryNameGenerator, string $resourceClass, Operation $operation = null, array $context = []): void
     {
+        // Condition: check if the property is ready for filter
         if (
             !$this->isPropertyEnabled($property, $resourceClass) ||
             !$this->isPropertyMapped($property, $resourceClass)
@@ -20,7 +21,7 @@ final class SearchFilter extends AbstractFilter   // Custom search filter for AP
             return;
         }
 
-        $parameterName = $queryNameGenerator->generateParameterName($property);  // Generate a parameter name for the query to 
+        $parameterName = $queryNameGenerator->generateParameterName($property);  // Generate a parameter name for the query to avoid conflicts
         $queryBuilder  // Add a WHERE clause using REGEX for search (nota: REGEXP is a specific instruction for MySQL database. It is possible to use LIKE)
             ->andWhere(sprintf('REGEXP(o.%s, :%s) = 1', $property, $parameterName))  // sprintf() format the query with the column and property name
             ->setParameter($parameterName, $value);  // Bind value with variable $parameterName
