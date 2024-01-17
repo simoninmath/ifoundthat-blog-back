@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,7 +16,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
-
+use App\Filter\SearchFilter;
 
 #[ApiResource (
     operations: [
@@ -65,6 +66,7 @@ class Article
     ])]
     private ?int $id = null;
 
+    #[ApiFilter(SearchFilter::class)]
     #[ORM\Column(length: 255)]
     #[Groups ([
         'read:Article:item',
@@ -74,6 +76,7 @@ class Article
     ])]
     private ?string $title = null;
 
+    #[ApiFilter(SearchFilter::class)]
     #[ORM\Column(type: Types::TEXT)]
     #[Groups ([
         'read:Article:item',
@@ -83,6 +86,7 @@ class Article
     ])]
     private ?string $chapo = null;
 
+    #[ApiFilter(SearchFilter::class)]
     #[ORM\Column(type: Types::TEXT)]
     #[Groups ([
         'read:Article:item',
