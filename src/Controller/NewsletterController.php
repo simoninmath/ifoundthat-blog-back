@@ -10,10 +10,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
+// Controller responsible for CRUD operations on the Newsletter entity
 class NewsletterController extends AbstractController
 {
 
-    #CRUD: Get Collection => TESTED! OK
+    // CRUD: Get Collection Retrieve a list of all newsletters => TESTED! OK
     #[Route('/api/custom/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]
     public function listNewsletters(NewsletterRepository $newsletterRepo): Response
     {
@@ -23,7 +25,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Get => TESTED! OK
+    // CRUD: Get - Retrieve a specific newsletter by ID => TESTED! OK
     #[Route('/api/custom/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]
     public function showNewsletter(Newsletter $newsletter): Response
     {
@@ -31,7 +33,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Post => TESTED! OK
+    // CRUD: Post - Create a new newsletter => TESTED! OK
     #[Route('/api/custom/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
     public function createNewsletter(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -48,7 +50,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Put => TESTED! OK
+    // CRUD: Put - Update a newsletter by replacing its data => TESTED! OK
     #[Route('/api/custom/protected_newsletters_put/{id}', name: 'newsletters_put', methods: ['PUT'])]
     public function updateNewsletter(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
@@ -63,7 +65,7 @@ class NewsletterController extends AbstractController
     }
 
     
-    #CRUD: Patch => TESTED! OK
+    // CRUD: Patch - Update a newsletter with partial data => TESTED! OK
     #[Route('/api/custom/protected_newsletters_patch/{id}', name: 'newsletters_patch', methods: ['PATCH'])]
     public function updateNewsletterWithPatch(Request $request, Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
@@ -78,7 +80,7 @@ class NewsletterController extends AbstractController
     }
 
 
-    #CRUD: Delete => TESTED! OK
+    // CRUD: Delete - Delete a newsletter => TESTED! OK
     #[Route('/api/custom/protected_newsletters_delete/{id}', name: 'delete_newsletter', methods: ['DELETE'])]
     public function deleteNewsletter(Newsletter $newsletter, EntityManagerInterface $entityManager): Response
     {
