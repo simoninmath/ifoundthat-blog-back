@@ -19,9 +19,9 @@ api_platform:
     keep_legacy_inflector: false
 
     # SearchFilter
-    filter:
-        metadata: 
-            'App\Entity\Article':  # The entity to secure
-                filters:
-                    - 'search_filter' # Filter alias
+    # filter:
+    #     metadata: 
+    #         'App\Entity\Article':  # The entity to secure
+    #             filters:
+    #                 - 'search_filter' # Applied filter
 
