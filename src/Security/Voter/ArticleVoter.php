@@ -44,7 +44,7 @@ class ArticleVoter extends Voter
                 }
                 break;
             case 'ARTICLE_CREATE':
-                if($this->security->isGranted('ROLE_USER')){
+                if($this->security->isGranted('ROLE_ADMIN')){
                     return true;
                 }
                 break;

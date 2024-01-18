@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -16,23 +15,20 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
-use App\Filter\SearchFilter;
+
 
 #[ApiResource (
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => ['read:Article:collection']]), # Create an instance of GetCollection operation and normalize it with groups option
         new Post(
-            security: "is_granted('ARTICLE_CREATE', object)",
-            name:'protected_article_post',
-            uriTemplate:'protected_article_post'
+            security: "is_granted('ROLE_ADMIN')",  # Post method is only available for admin
         ),
         new Get(
-            security: "is_granted('ARTICLE_READ', object)",
             normalizationContext: ['groups' => ['read:Article:item']]
         ),
         new Put(
-            security: "is_granted('ARTICLE_EDIT', object)",
+            security: "is_granted('ARTICLE_EDIT', object)",  # Voter's specifications
         ),
         new Delete(
             security: "is_granted('ARTICLE_DELETE', object)",
@@ -43,12 +39,12 @@ use App\Filter\SearchFilter;
         new Get(
             normalizationContext: ['groups' => ['read:Article:item:public']],  # Specify the which request is public
             name:'public_article',
-            uriTemplate:'public_articles_get_by_id/{id}'
+            uriTemplate:'public_articles/{id}'
         ), 
         new GetCollection(
             normalizationContext: ['groups' => ['read:Article:collection:public']],
             name:'public_articles',
-            uriTemplate:'public_articles_get_collection'
+            uriTemplate:'public_articles'
         ), 
     ],
 )]
@@ -66,7 +62,6 @@ class Article
     ])]
     private ?int $id = null;
 
-    #[ApiFilter(SearchFilter::class)]
     #[ORM\Column(length: 255)]
     #[Groups ([
         'read:Article:item',
@@ -76,7 +71,6 @@ class Article
     ])]
     private ?string $title = null;
 
-    #[ApiFilter(SearchFilter::class)]
     #[ORM\Column(type: Types::TEXT)]
     #[Groups ([
         'read:Article:item',
@@ -86,7 +80,6 @@ class Article
     ])]
     private ?string $chapo = null;
 
-    #[ApiFilter(SearchFilter::class)]
     #[ORM\Column(type: Types::TEXT)]
     #[Groups ([
         'read:Article:item',
@@ -115,7 +108,7 @@ class Article
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false)]  
     #[Groups ([
         'read:Article:item',
         'read:Article:collection',
@@ -127,7 +120,6 @@ class Article
     #[ORM\ManyToOne(inversedBy: 'articles', targetEntity: User::class)]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
-    // public ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class, orphanRemoval: true)]
     #[Groups ([
@@ -259,7 +251,7 @@ class Article
         return $this->comments;
     }
 
-    public function setComment(Comment $comment): static
+    public function addComment(Comment $comment): static
     {
         if (!$this->comments->contains($comment)) {
             $this->comments->add($comment);
@@ -269,7 +261,7 @@ class Article
         return $this;
     }
 
-    public function deleteComment(Comment $comment): static
+    public function removeComment(Comment $comment): static
     {
         if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
@@ -289,7 +281,7 @@ class Article
         return $this->tags;
     }
 
-    public function setTag(Tag $tag): static
+    public function addTag(Tag $tag): static
     {
         if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
@@ -312,6 +304,7 @@ class Article
 
 // namespace App\Entity;
 
+// use ApiPlatform\Metadata\ApiFilter;
 // use ApiPlatform\Metadata\ApiResource;
 // use App\Repository\ArticleRepository;
 // use Doctrine\Common\Collections\ArrayCollection;
@@ -325,55 +318,43 @@ class Article
 // use ApiPlatform\Metadata\Put;
 // use ApiPlatform\Metadata\Delete;
 // use ApiPlatform\Metadata\Patch;
+// use App\ApiFilter\SearchFilter;
 
-// #[ORM\Entity(repositoryClass: ArticleRepository::class)]
-// // Secure APIPlatform requests
-// #[GetCollection]
-// #[Get]
-// #[Post(security: "is_granted('ROLE_ADMIN')")]
-// #[Put(security: "is_granted('ROLE_ADMIN')")]
-// #[Delete(security: "is_granted('ROLE_ADMIN')")]
 // #[ApiResource (
 //     operations: [
 //         new GetCollection(
-//             // normalizationContext: ['groups' => ['read:Article:collection']],  
-//             normalizationContext: ['groups' => ['read:Article:collection:public']],  // Create an instance of GetCollection operation and normalize it with groups option
-//             name:'public_articles',
-//             uriTemplate:'public_articles'
-//         ),  
+//             normalizationContext: ['groups' => ['read:Article:collection']]), # Create an instance of GetCollection operation and normalize it with groups option
 //         new Post(
-//             security: "is_granted('ARTICLE_POST', object)",
-//             name:'public_articles_post',
-//             uriTemplate:'public_articles_post' //TODO modifier la route
+//             security: "is_granted('ARTICLE_CREATE', object)",
+//             name:'protected_article_post',
+//             uriTemplate:'protected_article_post'
 //         ),
 //         new Get(
-//             // normalizationContext: ['groups' => ['read:Article:item']],
-//             normalizationContext: ['groups' => ['read:Article:item:public']],  // Specify which request is public
-//             name:'public_article',
-//             uriTemplate:'public_articles/{id}'
+//             security: "is_granted('ARTICLE_READ', object)",
+//             normalizationContext: ['groups' => ['read:Article:item']]
 //         ),
 //         new Put(
-//             normalizationContext: ['groups' => ['write:Article:item']], 
-//             security: "is_granted('ARTICLE_PUT', object)",
-//             name:'protected_articles_put',
-//             uriTemplate:'protected_articles_put'
+//             security: "is_granted('ARTICLE_EDIT', object)",
 //         ),
 //         new Delete(
 //             security: "is_granted('ARTICLE_DELETE', object)",
-//             name:'protected_articles_delete',
-//             uriTemplate:'protected_articles_delete'
 //         ),
 //         new Patch(
-//             normalizationContext: ['groups' => ['write:Article:item']],
-//             security: "is_granted('ARTICLE_PATCH', object)",
-//             name:'protected_articles_patch',
-//             uriTemplate:'protected_articles_patch'
+//             security: "is_granted('ARTICLE_EDIT', object)",
 //         ),
-
+//         new Get(
+//             normalizationContext: ['groups' => ['read:Article:item:public']],  # Specify the which request is public
+//             name:'public_article',
+//             uriTemplate:'public_articles_get_by_id/{id}'
+//         ), 
+//         new GetCollection(
+//             normalizationContext: ['groups' => ['read:Article:collection:public']],
+//             name:'public_articles',
+//             uriTemplate:'public_articles_get_collection'
+//         ), 
 //     ],
-// )
-// ]
-
+// )]
+// #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 // class Article
 // {
 //     #[ORM\Id]
@@ -387,6 +368,7 @@ class Article
 //     ])]
 //     private ?int $id = null;
 
+//     #[ApiFilter(SearchFilter::class)]
 //     #[ORM\Column(length: 255)]
 //     #[Groups ([
 //         'read:Article:item',
@@ -396,6 +378,7 @@ class Article
 //     ])]
 //     private ?string $title = null;
 
+//     #[ApiFilter(SearchFilter::class)]
 //     #[ORM\Column(type: Types::TEXT)]
 //     #[Groups ([
 //         'read:Article:item',
@@ -405,6 +388,7 @@ class Article
 //     ])]
 //     private ?string $chapo = null;
 
+//     #[ApiFilter(SearchFilter::class)]
 //     #[ORM\Column(type: Types::TEXT)]
 //     #[Groups ([
 //         'read:Article:item',
@@ -442,7 +426,7 @@ class Article
 //     ])]
 //     private ?Categorie $categorie = null;
 
-//     #[ORM\ManyToOne(inversedBy: 'articles')]
+//     #[ORM\ManyToOne(inversedBy: 'articles', targetEntity: User::class)]
 //     #[ORM\JoinColumn(nullable: false)]
 //     private ?User $user = null;
 
@@ -576,7 +560,7 @@ class Article
 //         return $this->comments;
 //     }
 
-//     public function addComment(Comment $comment): static
+//     public function setComment(Comment $comment): static
 //     {
 //         if (!$this->comments->contains($comment)) {
 //             $this->comments->add($comment);
@@ -586,7 +570,7 @@ class Article
 //         return $this;
 //     }
 
-//     public function removeComment(Comment $comment): static
+//     public function deleteComment(Comment $comment): static
 //     {
 //         if ($this->comments->removeElement($comment)) {
 //             // set the owning side to null (unless already changed)
@@ -606,7 +590,7 @@ class Article
 //         return $this->tags;
 //     }
 
-//     public function addTag(Tag $tag): static
+//     public function setTag(Tag $tag): static
 //     {
 //         if (!$this->tags->contains($tag)) {
 //             $this->tags->add($tag);
