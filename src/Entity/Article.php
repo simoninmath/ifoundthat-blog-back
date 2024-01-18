@@ -108,7 +108,7 @@ class Article
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[ORM\JoinColumn(nullable: false)]  
+    #[ORM\JoinColumn(nullable: true)]  
     #[Groups ([
         'read:Article:item',
         'read:Article:collection',
