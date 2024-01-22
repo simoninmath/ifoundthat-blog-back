@@ -22,10 +22,10 @@ class Newsletter
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
 
-    // Constructor instanciate DateTimeImmutable class
+    // Constructor instanciate DateTimeImmutable class to automatically insert it in a request
     public function __construct()
     {
-        $this->createdAt = new \DateTimeImmutable;
+        $this->createdAt = new \DateTimeImmutable;  
     }
 
     // Getters and Setters
