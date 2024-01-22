@@ -61,8 +61,8 @@ class ArticleRepository extends ServiceEntityRepository
     public function createOneArticleWithDql()
     {
         $dql = "SELECT art.id, art.title, 
-                art.chapo, art.createdAt, 
-                art.updatedAt
+                art.chapo, art.content 
+                art.createdAt, art.updatedAt
                 FROM App\Entity\Article as art
                 WHERE art.id = :articleId";    // Condition that check if it is the correct Id
     
