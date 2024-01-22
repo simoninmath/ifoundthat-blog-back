@@ -60,10 +60,10 @@ security:
         - { path: ^/api$,                                 roles: PUBLIC_ACCESS }
         - { path: ^/api/login$,                           roles: PUBLIC_ACCESS }
         - { path: ^/api/register$,                        roles: PUBLIC_ACCESS }
-        - { path: ^/api/public_articles/,                 roles: PUBLIC_ACCESS }  # uriTemplate in entity to personalize URL
-        - { path: ^/api/public_articles$,                 roles: PUBLIC_ACCESS }
         - { path: ^/api/custom/public_newsletters_post/,  roles: PUBLIC_ACCESS }
         - { path: ^/api/custom/public_newsletters_post$,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/articles/,  roles: PUBLIC_ACCESS }
+        - { path: ^/api/articles$,  roles: PUBLIC_ACCESS }
         # Routes exceptions
         - { path: ^/api/,                                 roles: IS_AUTHENTICATED_FULLY }  # For all request after api/ auth is requiered (ROLE_ADMIN in this context)               
 
