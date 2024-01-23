@@ -9,10 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Post;
-// use ApiPlatform\Metadata\Get;
-// use ApiPlatform\Metadata\Put;
-// use ApiPlatform\Metadata\Delete;
-// use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
 
 #[ORM\Entity(repositoryClass: FormRepository::class)]
 #[ApiResource]
@@ -22,41 +22,41 @@ class Form
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[GetCollection]
-    // #[Get]
+    #[Get]
     #[Post]
-    // #[Put]
-    // #[Delete]
-    #[ApiResource(
+    #[Put]
+    #[Delete]
+    #[ApiResource (
         operations: [
-            new Post(
-                // security: "is_granted('FORM_POST', object)",  //TODO mettre en place le Voter
-                // normalizationContext: ['groups' => ['write:Form:public']],
-                name:'public_form_post',
-                uriTemplate:'public_form_post'
+            new GetCollection(
+                security: "is_granted('ROLE_ADMIN')",  # Only Admin can get form list
+            ),            
+            new Post(), # Post method is always public for a contact form
+            
+            new Get(
+                security: "is_granted('ROLE_ADMIN')",  # Only Admin can get form list
             ),
-        ]
+            new Put(
+                security: "is_granted('FORM_EDIT', object)",  # Voter's specifications
+            ),
+            new Delete(
+                security: "is_granted('FORM_DELETE', object)",
+            ),
+            new Patch(
+                security: "is_granted('FORM_EDIT', object)",
+            ),
+        ],
     )]
-    #[Groups([
-        'write:Form:public'
-    ])]
+
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
-    #[Groups([
-        'write:Form:public'
-    ])]
     private ?string $name = null;
 
     #[ORM\Column(length: 70)]
-    #[Groups([
-        'write:Form:public'
-    ])]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups([
-        'write:Form:public'
-    ])]
     private ?string $message = null;
 
     public function getId(): ?int
