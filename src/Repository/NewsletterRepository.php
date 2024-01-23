@@ -15,8 +15,8 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Newsletter[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 
-class NewsletterRepository extends ServiceEntityRepository
-{
+class NewsletterRepository extends ServiceEntityRepository {
+
     // Constructor for the NewsletterRepository.    
     public function __construct(
         ManagerRegistry $registry
@@ -24,30 +24,17 @@ class NewsletterRepository extends ServiceEntityRepository
         parent::__construct($registry, Newsletter::class);
     }
 
-    // public function fetchInfoFromNewsletterWithDql(): array
-    // {
-    //      // DQL request which return Array
-    //     $dql = "SELECT newsletterinfo.id, newsletterinfo.email  
-    //            FROM App\Entity\Newsletter AS newsletterinfo";
-
-    //     // Create a query using the EntityManager and execute it
-    //     $query = $this->getEntityManager()->createQuery($dql);
-    //     $result = $query->getResult();
-
-    //     return $result;
-    // }
-
 
     // Fetch information from newsletters using DQL (Doctrine Query Language)
     public function fetchInfoFromNewsletterWithDql(): array
-    {
-        $entityManager = $this->getDoctrine()->getManager();
-        $query = $entityManager->createQuery(
+    { 
+        $entityManager = $this->getDoctrine()->getManager();  // Create a query using the EntityManager and execute it
+        $dql = $entityManager->createQuery(   // DQL request which return Array
             'SELECT newsletter.id, newsletter.email
-             FROM App\Entity\Newsletter AS newseletter'
+             FROM App\Entity\Newsletter AS newsletter'
         );
 
-        $result = $query->getResult();
+        $result = $dql->getResult();
 
         return $result;
     }
@@ -68,16 +55,5 @@ class NewsletterRepository extends ServiceEntityRepository
         $preparedQuery->bindParam(':email', $email);
         $preparedQuery->execute();
     }
-
-
-    // public function insertEmailFromNewsletter(int $id, string $email): void
-    // {
-    //     // Use EntityManager to execute query with parameters
-    //     $conn = $this->getEntityManager()->getConnection();
-
-    //     $sql = "INSERT INTO ma_table (id, email, createdAt) 
-    //             VALUES (?, ?, NOW())";
-    //     $conn->executeUpdate($sql, [$id, $email]);
-    // }
 
 }
