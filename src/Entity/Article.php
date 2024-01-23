@@ -21,6 +21,7 @@ use ApiPlatform\Metadata\Patch;
     operations: [
         new GetCollection(
             normalizationContext: ['groups' => ['read:Article:collection']]), # Create an instance of GetCollection operation and normalize it with groups option
+        
         new Post(
             security: "is_granted('ROLE_ADMIN')",  # Post method is only available for admin
         ),
