@@ -17,6 +17,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
+use App\Controller\Security\RegisterController;
+use App\Dto\UserRegisterDto;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -28,6 +30,12 @@ use ApiPlatform\Metadata\Patch;
         new Put(normalizationContext: ['groups' => ['read:User:item']]),
         new Delete(normalizationContext: ['groups' => ['read:User:item']]),
         new Patch(normalizationContext: ['groups' => ['read:User:item']]),
+        new Post(
+            name: 'registration',
+            uriTemplate: 'register',
+            input: UserRegisterDto::class,
+            controller: RegisterController::class
+        )
     ]
 )
 ]
