@@ -16,43 +16,44 @@ class NewsletterController extends AbstractController
 {
 
     // CRUD: Get Collection - Retrieve a list of all newsletters
-    #[Route('/api/custom/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]
+    #[Route('/api/custom/protected_newsletters_get_collection', name: 'newsletters_get_collection', methods: ['GET'])]  // REST End-Point
     public function listNewsletters(NewsletterRepository $newsletterRepo): Response
     {
-        $newslettersList = $newsletterRepo->findAll();
+        $newslettersList = $newsletterRepo->findAll();  // Using findAll() method to get all data from newsletter database
 
-        return $this->json($newslettersList);
+        return $this->json($newslettersList);  // Return a JSON object as a response
     }
 
 
     // CRUD: Get - Retrieve a specific newsletter by ID
-    #[Route('/api/custom/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]
+    #[Route('/api/custom/protected_newsletters_get_by_id/{id}', name: 'newsletters_get_by_id', methods: ['GET'])]  // REST End-Point
     public function showNewsletter(Newsletter $newsletter): Response
     {
-        return $this->json($newsletter);
+        return $this->json($newsletter);  // Return a JSON object as a response
     }
 
 
-    // CRUD: Post - Create a new newsletter
-    #[Route('/api/custom/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]
-    public function createNewsletter(Request $request, EntityManagerInterface $entityManager): Response
+    // CRUD: Post - Create a new newsletter (REST End-Point)
+    #[Route('/api/custom/public_newsletters_post', name: 'newsletters_post', methods: ['POST'])]  
+    public function createNewsletter(
+        Request $request, 
+        EntityManagerInterface $entityManager): Response
     {
-        // $toto = $this->json([1, 2, 3]);
-        // return $toto;
-        //dd('stop controller');
-        $newsletter = new Newsletter;  // Need to instanciate a new Newsletter Class here (not with DI), to avoid 500 error
+        // Need to instanciate a new Newsletter Class here (not with DI), to avoid 500 error
+        $newsletter = new Newsletter;  
         $data = json_decode($request->getContent(), true);
 
-        // $newsletter->setId($data['id']);
-        // dd('catch data!', $data['email']);
-        $newsletter->setEmail($data['email']);
+        // Create a new newsletter object
+        $newsletter->setEmail($data['email']);  
 
+        // Doctrine method that persist data before writing it into database
         $entityManager->persist($newsletter);
-        $entityManager->flush();
 
-        return $this->json($newsletter);
-        // $toto = $this->json([1, 2, 3]);
-        // return $toto;
+        // Doctrine method that write data into database
+        $entityManager->flush();
+        
+        // Return a JSON object as a response
+        return $this->json($newsletter);  
     }
 
 
