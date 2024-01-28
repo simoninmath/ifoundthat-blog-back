@@ -15,6 +15,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
+use Symfony\Component\Validator\Constraints as Assert; // Import allow using Assert
 
 
 #[ApiResource (
@@ -63,13 +64,14 @@ class Article
     ])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 30)]
     #[Groups ([
         'read:Article:item',
         'read:Article:collection',
         'read:Article:item:public',
         'read:Article:collection:public'
     ])]
+    #[Assert\Length(min: 2, max: 30, minMessage: 'Title must be 30 characters max.')]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -79,6 +81,7 @@ class Article
         'read:Article:item:public',
         'read:Article:collection:public'
     ])]
+    #[Assert\Length(min: 2, max: 70, minMessage: 'Chapo must be 70 characters max.')]
     private ?string $chapo = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -88,6 +91,7 @@ class Article
         'read:Article:item:public',
         'read:Article:collection:public'
     ])]
+    #[Assert\Length(min: 2, max: 3500, minMessage: 'Article content must be 3500 characters max.')]
     private ?string $content = null;
 
     #[ORM\Column]

@@ -4,6 +4,8 @@ namespace App\Entity;
 
 use App\Repository\NewsletterRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert; // Import allow using Assert
+
 
 // Repository class for interacting with the Newsletter entity
 #[ORM\Entity(repositoryClass: NewsletterRepository::class)]
@@ -17,6 +19,8 @@ class Newsletter
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
+    // Contraints email validation
+    #[Assert\Email(message: 'This email {{ value }}" is not a valid email address.')]
     private ?string $email = null;
 
     #[ORM\Column]

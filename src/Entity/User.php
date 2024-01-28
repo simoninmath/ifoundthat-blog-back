@@ -17,6 +17,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -47,6 +48,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         'read:User:item',
         'read:User:collection'
      ])]
+    #[Assert\Email(message: 'This email {{ value }}" is not a valid email address.')]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -60,6 +62,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Length(min: 6, minMessage: 'Your password must be 6 characters or less.')]
     private ?string $password = null;
 
     #[ORM\Column]

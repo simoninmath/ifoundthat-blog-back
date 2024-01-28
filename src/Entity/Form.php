@@ -13,6 +13,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Patch;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: FormRepository::class)]
 #[ApiResource]
@@ -51,12 +52,15 @@ class Form
     private ?int $id = null;
 
     #[ORM\Column(length: 70)]
+    #[Assert\Length(min: 2, max: 70, minMessage: 'Your name is too short.')]
     private ?string $name = null;
 
     #[ORM\Column(length: 70)]
+    #[Assert\Email(message: 'This email {{ value }}" is not a valid email address.')]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min: 2, max: 255, minMessage: 'Your message is too short.')]
     private ?string $message = null;
 
     public function getId(): ?int
